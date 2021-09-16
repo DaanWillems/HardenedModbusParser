@@ -1,0 +1,51 @@
+module ModBus;
+
+type ActionCode = enum {
+    RC = 0x01,
+    RDI = 0x02,
+    RHR = 0x03,
+    RIR = 0x04,
+    WSC = 0x05,
+    WSHR = 0x06,
+    WMC = 0x0f,
+    WMHR = 0x10
+};
+
+public type Request = unit {
+    transactionID: bytes &size=2; 
+    protocolID: bytes &size=2; 
+    length: bytes &size=2; 
+    unitID: bytes &size=1; 
+    pdu: PDU;
+};
+
+type PDU = unit {
+    actionCode: int8 &size=1 &convert=ActionCode($$);
+    switch ( self.actionCode ) {
+        ActionCode::RC    -> rc:   Data;
+        ActionCode::RDI   -> rdi:  Data;
+        ActionCode::RHR   -> rhr:  Data;
+        ActionCode::RIR   -> rir:  Data;
+        ActionCode::WSC   -> wsc:  Data;
+        ActionCode::WSHR  -> wshr: Data;
+        ActionCode::WMC   -> wmc:  DataWMHR;
+        ActionCode::WMHR  -> wmhr: DataWMHR;
+    };
+};
+
+type Data = unit {
+    address: int16; 
+    count: int16;
+};
+
+type DataWMC = unit {
+    address: bytes &size=2; 
+    count: bytes &size=2;
+};
+
+type DataWMHR = unit {
+    registerAddress: uint16; 
+    registerCount: uint16;
+    byteCount: uint8;
+    registerValues: uint16[self.registerCount];
+};

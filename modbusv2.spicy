@@ -23,12 +23,11 @@ public type PDU = unit {
         ActionCode::WMC   -> wmc:  DataWMHR;
         ActionCode::WMHR  -> wmhr: DataWMHR;
     };
-
     on %done { print self; }
 };
 
 type Data = unit {
-    address: bytes &size=2; 
+    address: uint16; 
     count: bytes &size=2;
 };
 
