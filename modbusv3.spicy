@@ -12,11 +12,13 @@ type ActionCode = enum {
 };
 
 public type Request = unit {
-    transactionID: bytes &size=2; 
-    protocolID: bytes &size=2; 
-    length: bytes &size=2; 
+    #transactionID: bytes &size=2; 
+    #protocolID: bytes &size=2; 
+    #length: uint16; 
     unitID: bytes &size=1; 
     pdu: PDU;
+    CRC: uint16;
+    on %done { print self; }
 };
 
 type PDU = unit {
