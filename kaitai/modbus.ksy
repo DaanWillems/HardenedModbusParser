@@ -9,10 +9,11 @@ seq:
   - id: length
     type: u2
   - id: unit_id
-    type: u1
+    type: s1
   - id: action_code
-    type: u2
+    type: s1
   - id: pdu
+    size: length-2
     type:
       switch-on: action_code
       cases:

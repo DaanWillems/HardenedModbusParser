@@ -85,8 +85,8 @@ private:
     uint16_t m_transaction_id;
     uint16_t m_protocol_id;
     uint16_t m_length;
-    uint8_t m_unit_id;
-    uint16_t m_action_code;
+    int8_t m_unit_id;
+    int8_t m_action_code;
     kaitai::kstruct* m_pdu;
     bool n_pdu;
 
@@ -96,16 +96,20 @@ public:
 private:
     modbus_packet_t* m__root;
     kaitai::kstruct* m__parent;
+    std::string m__raw_pdu;
+    kaitai::kstream* m__io__raw_pdu;
 
 public:
     uint16_t transaction_id() const { return m_transaction_id; }
     uint16_t protocol_id() const { return m_protocol_id; }
     uint16_t length() const { return m_length; }
-    uint8_t unit_id() const { return m_unit_id; }
-    uint16_t action_code() const { return m_action_code; }
+    int8_t unit_id() const { return m_unit_id; }
+    int8_t action_code() const { return m_action_code; }
     kaitai::kstruct* pdu() const { return m_pdu; }
     modbus_packet_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
+    std::string _raw_pdu() const { return m__raw_pdu; }
+    kaitai::kstream* _io__raw_pdu() const { return m__io__raw_pdu; }
 };
 
 #endif  // MODBUS_PACKET_H_

@@ -2,4 +2,4 @@
 AFL_KILL_SIGNAL=9
 AFL_USE_ASAN=1
 # command line:
-'afl-fuzz' '-i' 'afl/' '-o' 'findings/' './4.out' '-f' '@@'
+'afl-fuzz' '-D' '-i' '../inputs/' '-o' 'findings/' './parser' '-f' '@@'
