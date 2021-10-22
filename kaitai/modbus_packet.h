@@ -5,16 +5,28 @@
 
 #include "kaitai/kaitaistruct.h"
 #include <stdint.h>
+#include "u2_max_125.h"
+#include "u2_max_2000.h"
+#include "u2_max_65280.h"
 
 #if KAITAI_STRUCT_VERSION < 9000L
 #error "Incompatible Kaitai Struct C++/STL API: version 0.9 or later is required"
 #endif
+class u2_max_125_t;
+class u2_max_2000_t;
+class u2_max_65280_t;
 
 class modbus_packet_t : public kaitai::kstruct {
 
 public:
-    class data_t;
-    class data_multiple_t;
+    class data_wshr_t;
+    class data_wmhr_t;
+    class data_rir_t;
+    class data_wmc_t;
+    class data_rdi_t;
+    class data_wsc_t;
+    class data_rc_t;
+    class data_rhr_t;
 
     modbus_packet_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, modbus_packet_t* p__root = 0);
 
@@ -25,18 +37,18 @@ private:
 public:
     ~modbus_packet_t();
 
-    class data_t : public kaitai::kstruct {
+    class data_wshr_t : public kaitai::kstruct {
 
     public:
 
-        data_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+        data_wshr_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
 
     private:
         void _read();
         void _clean_up();
 
     public:
-        ~data_t();
+        ~data_wshr_t();
 
     private:
         uint16_t m_address;
@@ -51,23 +63,23 @@ public:
         modbus_packet_t* _parent() const { return m__parent; }
     };
 
-    class data_multiple_t : public kaitai::kstruct {
+    class data_wmhr_t : public kaitai::kstruct {
 
     public:
 
-        data_multiple_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+        data_wmhr_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
 
     private:
         void _read();
         void _clean_up();
 
     public:
-        ~data_multiple_t();
+        ~data_wmhr_t();
 
     private:
         uint16_t m_address;
         uint16_t m_register_count;
-        uint16_t m_byte_count;
+        uint8_t m_byte_count;
         std::string m_register_values;
         modbus_packet_t* m__root;
         modbus_packet_t* m__parent;
@@ -75,8 +87,168 @@ public:
     public:
         uint16_t address() const { return m_address; }
         uint16_t register_count() const { return m_register_count; }
-        uint16_t byte_count() const { return m_byte_count; }
+        uint8_t byte_count() const { return m_byte_count; }
         std::string register_values() const { return m_register_values; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_rir_t : public kaitai::kstruct {
+
+    public:
+
+        data_rir_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_rir_t();
+
+    private:
+        uint16_t m_address;
+        u2_max_125_t* m_count;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        u2_max_125_t* count() const { return m_count; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_wmc_t : public kaitai::kstruct {
+
+    public:
+
+        data_wmc_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_wmc_t();
+
+    private:
+        uint16_t m_address;
+        uint16_t m_register_count;
+        uint8_t m_byte_count;
+        std::string m_register_values;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        uint16_t register_count() const { return m_register_count; }
+        uint8_t byte_count() const { return m_byte_count; }
+        std::string register_values() const { return m_register_values; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_rdi_t : public kaitai::kstruct {
+
+    public:
+
+        data_rdi_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_rdi_t();
+
+    private:
+        uint16_t m_address;
+        u2_max_2000_t* m_count;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        u2_max_2000_t* count() const { return m_count; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_wsc_t : public kaitai::kstruct {
+
+    public:
+
+        data_wsc_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_wsc_t();
+
+    private:
+        uint16_t m_address;
+        u2_max_65280_t* m_count;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        u2_max_65280_t* count() const { return m_count; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_rc_t : public kaitai::kstruct {
+
+    public:
+
+        data_rc_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_rc_t();
+
+    private:
+        uint16_t m_address;
+        u2_max_2000_t* m_count;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        u2_max_2000_t* count() const { return m_count; }
+        modbus_packet_t* _root() const { return m__root; }
+        modbus_packet_t* _parent() const { return m__parent; }
+    };
+
+    class data_rhr_t : public kaitai::kstruct {
+
+    public:
+
+        data_rhr_t(kaitai::kstream* p__io, modbus_packet_t* p__parent = 0, modbus_packet_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~data_rhr_t();
+
+    private:
+        uint16_t m_address;
+        u2_max_125_t* m_count;
+        modbus_packet_t* m__root;
+        modbus_packet_t* m__parent;
+
+    public:
+        uint16_t address() const { return m_address; }
+        u2_max_125_t* count() const { return m_count; }
         modbus_packet_t* _root() const { return m__root; }
         modbus_packet_t* _parent() const { return m__parent; }
     };

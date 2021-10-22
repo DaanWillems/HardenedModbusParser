@@ -12,42 +12,69 @@ type ActionCode = enum {
 };
 
 public type Request = unit {
-    transactionID: bytes &size=2; 
-    protocolID: bytes &size=2; 
+    transactionID: uint16; 
+    protocolID: uint16; 
     length: uint16; 
-    unitID: bytes &size=1; 
-    pdu: PDU;
-    #CRC: uint16;
+    unitID: uint8; 
+    pdu: PDU &size=self.length-1;
+    null_field: bytes &eod &max-size=0;
     on %done { print self; }
-};
+} &max-size=253;
 
 type PDU = unit {
     actionCode: int8 &size=1 &convert=ActionCode($$);
     switch ( self.actionCode ) {
-        ActionCode::RC    -> rc:   Data;
-        ActionCode::RDI   -> rdi:  Data;
-        ActionCode::RHR   -> rhr:  Data;
-        ActionCode::RIR   -> rir:  Data;
-        ActionCode::WSC   -> wsc:  Data;
-        ActionCode::WSHR  -> wshr: Data;
-        ActionCode::WMC   -> wmc:  DataWMHR;
+        ActionCode::RC    -> rc:   DataRC;
+        ActionCode::RDI   -> rdi:  DataRDI;
+        ActionCode::RHR   -> rhr:  DataRHR;
+        ActionCode::RIR   -> rir:  DataRIR;
+        ActionCode::WSC   -> wsc:  DataWSC;
+        ActionCode::WSHR  -> wshr: DataWSHR;
+        ActionCode::WMC   -> wmc:  DataWMC;
         ActionCode::WMHR  -> wmhr: DataWMHR;
     };
 };
 
-type Data = unit {
-    address: int16; 
-    count: int16;
+type DataRC = unit {
+    address: uint16; 
+    count: uint16 &requires=($$ < 2001);
 };
 
-type DataWMC = unit {
-    address: bytes &size=2; 
-    count: bytes &size=2;
+type DataRDI = unit {
+    address: uint16; 
+    count: uint16 &requires=($$ < 2001);
+};
+
+type DataRHR = unit {
+    address: uint16; 
+    count: uint16 &requires=($$ < 126);
+};
+
+type DataRIR = unit {
+    address: uint16; 
+    count: uint16 &requires=($$ < 126);
+};
+
+type DataWSC = unit {
+    address: uint16; 
+    count: uint16 &requires=($$ < 65281);
+};
+
+type DataWSHR = unit {
+    address: uint16; 
+    count: uint16;
 };
 
 type DataWMHR = unit {
     registerAddress: uint16; 
-    registerCount: uint16;
-    byteCount: uint8;
+    registerCount: uint16 &requires=($$ < 124);
+    byteCount: uint8 &requires=($$ == self.registerCount*2);
     registerValues: uint16[self.registerCount];
+};
+
+type DataWMC = unit {
+    registerAddress: uint16; 
+    outputQuantity: uint16 &requires=($$ < 1968);
+    byteCount: uint8 &requires=($$ == self.outputQuantity);
+    registerValues: uint8[self.outputQuantity];
 };

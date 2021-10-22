@@ -1,0 +1,29 @@
+#include <fstream>
+#include <iostream>
+#include <kaitai/kaitaistream.h>
+#include "modbus_packet.h"
+#include <cxxabi.h>
+
+const char* currentExceptionTypeName()
+{
+    int status;
+    return abi::__cxa_demangle(abi::__cxa_current_exception_type()->name(), 0, 0, &status);
+}
+
+
+int main (int argc, char *argv[]) { 
+    try {
+        std::ifstream is(argv[1], std::ifstream::binary);
+        kaitai::kstream ks(&is);
+
+        modbus_packet_t data(&ks);
+
+    } catch(...) {
+        std::cout<<"Type of caught exception is "<<currentExceptionTypeName()<<std::endl;
+        // std::cout << "Message: " << e.what() << "\n";
+        // std::cout << "Type:    " << typeid(e).name() << "\n";
+    }
+
+    return 0;
+}
+

@@ -23,10 +23,7 @@ int main (int argc, char *argv[]) {
         std::cout << unsigned(data.unit_id()) << std::endl;
         std::cout << unsigned(data.action_code()) << std::endl;
 
-        modbus_packet_t::data_t pdu = dynamic_cast<modbus_packet_t::data_t&>(*data.pdu());
-
-        std::cout << pdu.address() << std::endl;
-    } catch(std::__ios_failure e) {
+    } catch(...) {
         std::cout<<"Type of caught exception is "<<currentExceptionTypeName()<<std::endl;
         // std::cout << "Message: " << e.what() << "\n";
         // std::cout << "Type:    " << typeid(e).name() << "\n";

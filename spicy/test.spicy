@@ -1,0 +1,8 @@
+module Test;
+
+import spicy;
+
+public type Foo = unit {
+    x: uint16;
+    on %done { print self; }
+} &max-size = self.x;
